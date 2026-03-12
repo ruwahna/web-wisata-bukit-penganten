@@ -350,6 +350,150 @@ nav {
 }
 
 /* ══════════════════════════════
+   DAYA TARIK WISATA
+══════════════════════════════ */
+.daya-tarik {
+  padding: 48px 40px;
+  background: #ffffff;
+  border-top: 1px solid #f0f0f0;
+  overflow: hidden;
+}
+
+.daya-tarik-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.daya-tarik-judul {
+  font-size: 18px;
+  font-weight: 800;
+  color: #111;
+}
+
+.daya-tarik-lihat {
+  font-size: 13px;
+  font-weight: 700;
+  color: #2d5a3d;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: gap 0.2s ease;
+}
+
+.daya-tarik-lihat:hover {
+  gap: 8px;
+}
+
+.daya-tarik-grid {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 8px;
+  cursor: grab;
+  scroll-behavior: smooth;
+}
+
+.daya-tarik-grid:active {
+  cursor: grabbing;
+}
+
+.daya-tarik-grid::-webkit-scrollbar {
+  height: 4px;
+}
+
+.daya-tarik-grid::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 10px;
+}
+
+.daya-tarik-grid::-webkit-scrollbar-thumb {
+  background: #2d5a3d;
+  border-radius: 10px;
+}
+
+.daya-tarik-grid.dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.daya-tarik-grid.dragging img {
+  pointer-events: none;
+}
+
+.daya-tarik-card {
+  flex: 0 0 220px;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.daya-tarik-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.13);
+}
+
+.daya-tarik-img {
+  position: relative;
+  width: 100%;
+  height: 160px;
+  overflow: hidden;
+}
+
+.daya-tarik-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.daya-tarik-card:hover .daya-tarik-img img {
+  transform: scale(1.08);
+}
+
+.daya-tarik-img .overlay-hover {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.45) 0%,
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.daya-tarik-card:hover .overlay-hover {
+  opacity: 1;
+}
+
+.daya-tarik-body {
+  padding: 14px 12px;
+}
+
+.daya-tarik-body h3 {
+  font-size: 14px;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 6px;
+}
+
+.daya-tarik-body p {
+  font-size: 12.5px;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* ══════════════════════════════
    ANIMASI
 ══════════════════════════════ */
 .fade-up {
