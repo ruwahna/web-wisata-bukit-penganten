@@ -9,7 +9,9 @@ body {
   background: #f0f0f0;
 }
 
-/* ── NAVBAR ── */
+/* ══════════════════════════════
+   NAVBAR
+══════════════════════════════ */
 nav {
   display: flex;
   align-items: center;
@@ -18,6 +20,7 @@ nav {
   padding: 0 32px;
   height: 62px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: height 0.3s ease, box-shadow 0.3s ease;
 }
 
 .nav-brand {
@@ -65,7 +68,25 @@ nav {
   font-size: 14px;
   font-weight: 600;
   color: #222;
+  position: relative;
+  padding-bottom: 4px;
   transition: color 0.15s;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #2d5a3d;
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+  width: 100%;
 }
 
 .nav-links a.active {
@@ -77,7 +98,9 @@ nav {
   color: #2d5a3d;
 }
 
-/* ── HERO ── */
+/* ══════════════════════════════
+   HERO
+══════════════════════════════ */
 .hero {
   position: relative;
   width: 100%;
@@ -88,8 +111,8 @@ nav {
 .hero-bg {
   position: absolute;
   inset: 0;
-  background: url('/assets/gmbr1.jpg')
-    center / cover no-repeat;
+  background: url('assets/gmbr1.jpg') center / cover no-repeat;
+  transition: transform 0.1s linear;
 }
 
 .hero-overlay {
@@ -121,6 +144,7 @@ nav {
   line-height: 1.28;
   margin-bottom: 12px;
   max-width: 400px;
+  animation: slideInLeft 0.8s ease both;
 }
 
 .hero-desc {
@@ -129,6 +153,7 @@ nav {
   line-height: 1.55;
   margin-bottom: 22px;
   max-width: 340px;
+  animation: slideInLeft 0.8s ease 0.2s both;
 }
 
 .hero-btn {
@@ -142,15 +167,111 @@ nav {
   border-radius: 6px;
   text-decoration: none;
   width: fit-content;
-  transition: background 0.2s;
+  transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  animation: slideInLeft 0.8s ease 0.4s both;
 }
 
 .hero-btn:hover {
   background: #4a6db8;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(91, 127, 203, 0.4);
 }
 
-/* ── AREA KOSONG BAWAH ── */
-.empty-section {
-  height: 200px;
-  background: #f0f0f0;
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ══════════════════════════════
+   MENGENAL GOA ASREP
+══════════════════════════════ */
+.mengenal {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  padding: 48px 40px;
+  background: #ffffff;
+}
+
+.mengenal-kiri {
+  flex: 1;
+}
+
+.mengenal-judul {
+  font-size: 18px;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 16px;
+}
+
+.mengenal-desc {
+  font-size: 13.5px;
+  color: #555;
+  line-height: 1.7;
+}
+
+.mengenal-kanan {
+  display: flex;
+  gap: 24px;
+  flex: 1;
+}
+
+.mengenal-card {
+  flex: 1;
+  overflow: hidden;
+  border-radius: 8px;
+  padding: 8px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mengenal-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+}
+
+.mengenal-card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.mengenal-card:hover img {
+  transform: scale(1.05);
+}
+
+.mengenal-card h3 {
+  font-size: 14px;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 6px;
+}
+
+.mengenal-card p {
+  font-size: 12.5px;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* ══════════════════════════════
+   ANIMASI
+══════════════════════════════ */
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
