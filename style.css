@@ -193,14 +193,15 @@ nav {
 ══════════════════════════════ */
 .mengenal {
   display: flex;
-  gap: 40px;
+  gap: 48px;
   align-items: flex-start;
   padding: 48px 40px;
   background: #ffffff;
 }
 
 .mengenal-kiri {
-  flex: 1;
+  flex: 0 0 500px;
+  max-width: 500px;
 }
 
 .mengenal-judul {
@@ -216,47 +217,133 @@ nav {
   line-height: 1.7;
 }
 
+.mengenal-kanan-wrap {
+  flex: 1;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.mengenal-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.mengenal-lihat {
+  font-size: 13px;
+  font-weight: 700;
+  color: #2d5a3d;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: gap 0.2s ease;
+}
+
+.mengenal-lihat:hover {
+  gap: 8px;
+}
+
 .mengenal-kanan {
   display: flex;
-  gap: 24px;
-  flex: 1;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 8px;
+  cursor: grab;
+  scroll-behavior: smooth;
+}
+
+.mengenal-kanan:active {
+  cursor: grabbing;
+}
+
+.mengenal-kanan::-webkit-scrollbar {
+  height: 4px;
+}
+
+.mengenal-kanan::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 10px;
+}
+
+.mengenal-kanan::-webkit-scrollbar-thumb {
+  background: #2d5a3d;
+  border-radius: 10px;
+}
+
+.mengenal-kanan.dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.mengenal-kanan.dragging img {
+  pointer-events: none;
 }
 
 .mengenal-card {
-  flex: 1;
+  flex: 0 0 200px;
+  scroll-snap-align: start;
   overflow: hidden;
-  border-radius: 8px;
-  padding: 8px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .mengenal-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.13);
 }
 
-.mengenal-card img {
+.mengenal-card-img {
+  position: relative;
   width: 100%;
   height: 140px;
+  overflow: hidden;
+}
+
+.mengenal-card-img img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 10px;
   display: block;
-  transition: transform 0.4s ease;
+  transition: transform 0.5s ease;
 }
 
-.mengenal-card:hover img {
-  transform: scale(1.05);
+.mengenal-card:hover .mengenal-card-img img {
+  transform: scale(1.08);
 }
 
-.mengenal-card h3 {
+.mengenal-card-img .overlay-hover {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.45) 0%,
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.mengenal-card:hover .overlay-hover {
+  opacity: 1;
+}
+
+.mengenal-card-body {
+  padding: 14px 12px;
+}
+
+.mengenal-card-body h3 {
   font-size: 14px;
   font-weight: 800;
   color: #111;
   margin-bottom: 6px;
 }
 
-.mengenal-card p {
+.mengenal-card-body p {
   font-size: 12.5px;
   color: #666;
   line-height: 1.6;
