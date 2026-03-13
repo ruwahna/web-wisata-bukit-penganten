@@ -33,10 +33,38 @@ window.addEventListener('scroll', () => {
 
 
 // ── SMOOTH SCROLL TOMBOL HERO ──
-document.querySelector('.hero-btn').addEventListener('click', function(e) {
-  e.preventDefault();
-  document.querySelector('#mengenal').scrollIntoView({ behavior: 'smooth' });
+const heroScrollButtons = document.querySelectorAll('.hero-scroll-btn');
+
+heroScrollButtons.forEach((btn) => {
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    const targetSelector = btn.dataset.target || btn.getAttribute('href');
+    const target = document.querySelector(targetSelector);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
 });
+
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if (!reduceMotion && heroScrollButtons.length > 0) {
+  const triggerHeroButtonPop = (btn) => {
+    btn.classList.remove('hero-btn-js-pop');
+    void btn.offsetWidth;
+    btn.classList.add('hero-btn-js-pop');
+  };
+
+  heroScrollButtons.forEach((btn, index) => {
+    setTimeout(() => triggerHeroButtonPop(btn), 650 + (index * 180));
+  });
+
+  let heroBtnIndex = 0;
+  setInterval(() => {
+    triggerHeroButtonPop(heroScrollButtons[heroBtnIndex]);
+    heroBtnIndex = (heroBtnIndex + 1) % heroScrollButtons.length;
+  }, 3200);
+}
 
 
 // ── ANIMASI FADE UP SAAT SCROLL ──
@@ -198,3 +226,74 @@ slider2.addEventListener('scroll', function() {
     lihatDayaTarik.textContent = 'Selanjutnya ›';
   }
 });
+
+// ── DRAG SCROLL SLIDER3 (GALERI) ──
+const slider3 = document.getElementById('slider3');
+const lihatGaleri = document.querySelector('.galeri-lihat');
+
+if (slider3 && lihatGaleri) {
+  let isDown3 = false;
+  let startX3;
+  let scrollLeft3;
+
+  slider3.addEventListener('mousedown', (e) => {
+    isDown3 = true;
+    slider3.classList.add('dragging');
+    startX3 = e.pageX - slider3.offsetLeft;
+    scrollLeft3 = slider3.scrollLeft;
+  });
+
+  slider3.addEventListener('mouseleave', () => {
+    isDown3 = false;
+    slider3.classList.remove('dragging');
+  });
+
+  slider3.addEventListener('mouseup', () => {
+    isDown3 = false;
+    slider3.classList.remove('dragging');
+  });
+
+  slider3.addEventListener('mousemove', (e) => {
+    if (!isDown3) return;
+    e.preventDefault();
+    const x = e.pageX - slider3.offsetLeft;
+    const walk = (x - startX3) * 1.5;
+    slider3.scrollLeft = scrollLeft3 - walk;
+  });
+
+  slider3.addEventListener('touchstart', (e) => {
+    startX3 = e.touches[0].pageX - slider3.offsetLeft;
+    scrollLeft3 = slider3.scrollLeft;
+  });
+
+  slider3.addEventListener('touchmove', (e) => {
+    const x = e.touches[0].pageX - slider3.offsetLeft;
+    const walk = (x - startX3) * 1.5;
+    slider3.scrollLeft = scrollLeft3 - walk;
+  });
+
+  lihatGaleri.addEventListener('click', function(e) {
+    e.preventDefault();
+    const cardWidth = slider3.querySelector('.galeri-card').offsetWidth + 20;
+    const maxScroll = slider3.scrollWidth - slider3.clientWidth;
+
+    if (slider3.scrollLeft >= maxScroll - 10) {
+      slider3.scrollTo({ left: 0, behavior: 'smooth' });
+      lihatGaleri.textContent = 'Lihat Semua ›';
+    } else {
+      slider3.scrollBy({ left: cardWidth, behavior: 'smooth' });
+      lihatGaleri.textContent = 'Selanjutnya ›';
+    }
+  });
+
+  slider3.addEventListener('scroll', function() {
+    const maxScroll = slider3.scrollWidth - slider3.clientWidth;
+    if (slider3.scrollLeft < 10) {
+      lihatGaleri.textContent = 'Lihat Semua ›';
+    } else if (slider3.scrollLeft >= maxScroll - 10) {
+      lihatGaleri.textContent = 'Kembali ke Awal ›';
+    } else {
+      lihatGaleri.textContent = 'Selanjutnya ›';
+    }
+  });
+}
