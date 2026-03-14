@@ -908,7 +908,7 @@ nav {
    ABOUT PAGE
 ══════════════════════════════ */
 .about-page-body {
-  background: #ececec;
+  background: #ffffff;
 }
 
 .about-page-wrap {
@@ -974,8 +974,10 @@ nav {
 }
 
 .about-content {
-  background: #efefef;
-  padding: 18px 18px 8px;
+  background: #ffffff;
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 24px 40px 12px;
 }
 
 .about-section {
@@ -1023,6 +1025,173 @@ nav {
   margin-bottom: 10px;
 }
 
+.about-image-row-bukit {
+  grid-template-columns: 1.55fr 0.78fr 0.78fr;
+}
+
+.about-komitmen-section {
+  margin-bottom: 6px;
+  background: #efefef;
+  border: 1px solid #e1e1e1;
+  border-radius: 0;
+  margin-left: -40px;
+  margin-right: -40px;
+  padding: 14px 40px;
+  border-left: 0;
+  border-right: 0;
+}
+
+.about-komitmen-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.about-komitmen-section h2 {
+  margin-bottom: 0;
+}
+
+.about-komitmen-lihat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #1c1c1c;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.about-komitmen-lihat span {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.about-komitmen-lihat:hover {
+  transform: translateX(3px);
+}
+
+.about-komitmen-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.about-komitmen-card {
+  background: #f8f8f8;
+  border-radius: 10px;
+  border: 1px solid #d8d8d8;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  padding: 14px 12px 16px;
+  text-align: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.about-komitmen-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 18px rgba(0, 0, 0, 0.16);
+}
+
+.about-komitmen-card img {
+  width: 92px;
+  height: 72px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 10px;
+}
+
+.about-komitmen-card h3 {
+  color: #121212;
+  font-size: 14px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.about-komitmen-card p {
+  color: #3f3f3f;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.about-lokasi-section {
+  margin-bottom: 0;
+}
+
+.about-lokasi-wrap {
+  background: #ffffff;
+  border: 1px solid #dfdfdf;
+  border-radius: 10px;
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 20px;
+  align-items: stretch;
+}
+
+.about-lokasi-map {
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #d5d5d5;
+  min-height: 188px;
+  background: #ffffff;
+}
+
+.about-lokasi-map iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 188px;
+  border: 0;
+  display: block;
+  transition: transform 0.55s ease;
+}
+
+.about-lokasi-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.about-lokasi-info h3 {
+  font-size: 20px;
+  color: #111;
+  margin-bottom: 8px;
+  font-weight: 800;
+}
+
+.about-lokasi-info p {
+  font-size: 13px;
+  line-height: 1.55;
+  color: #3f3f3f;
+  margin-bottom: 14px;
+  max-width: 360px;
+}
+
+.about-lokasi-info ul {
+  list-style: none;
+}
+
+.about-lokasi-info li {
+  font-size: 15px;
+  color: #111;
+  font-weight: 700;
+  line-height: 1.45;
+  transition: transform 0.22s ease;
+}
+
+.about-lokasi-info li + li {
+  margin-top: 8px;
+}
+
+.about-lokasi-wrap:hover .about-lokasi-map iframe {
+  transform: scale(1.03);
+}
+
+.about-lokasi-info li:hover {
+  transform: translateX(4px);
+}
+
 @media (max-width: 900px) {
   .about-page-wrap {
     padding: 0 10px 22px;
@@ -1052,7 +1221,7 @@ nav {
   }
 
   .about-content {
-    padding: 14px 10px 2px;
+    padding: 14px 16px 2px;
   }
 
   .about-section h2 {
@@ -1063,6 +1232,70 @@ nav {
   .about-image-row {
     grid-template-columns: 1fr;
     gap: 10px;
+  }
+
+  .about-image-row-bukit {
+    grid-template-columns: 1fr;
+  }
+
+  .about-komitmen-header {
+    align-items: flex-end;
+  }
+
+  .about-komitmen-section {
+    margin-left: -16px;
+    margin-right: -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .about-komitmen-lihat {
+    font-size: 13px;
+  }
+
+  .about-komitmen-lihat span {
+    font-size: 18px;
+  }
+
+  .about-komitmen-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .about-komitmen-card {
+    padding: 12px 10px;
+  }
+
+  .about-komitmen-card img {
+    width: 72px;
+    height: 56px;
+  }
+
+  .about-komitmen-card h3 {
+    font-size: 13px;
+  }
+
+  .about-komitmen-card p {
+    font-size: 11.5px;
+  }
+
+  .about-lokasi-wrap {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .about-lokasi-info h3 {
+    font-size: 18px;
+  }
+
+  .about-lokasi-info p {
+    font-size: 12.5px;
+    max-width: none;
+  }
+
+  .about-lokasi-info li {
+    font-size: 14px;
   }
 
   .about-image-row img,
