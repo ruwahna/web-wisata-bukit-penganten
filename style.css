@@ -300,6 +300,8 @@ nav {
   font-size: 18px;
   font-weight: 800;
   color: #111;
+  border-bottom: 2px solid #3a3a3a;
+  display: inline-block;
   margin-bottom: 16px;
 }
 
@@ -466,6 +468,8 @@ nav {
   font-size: 18px;
   font-weight: 800;
   color: #111;
+  border-bottom: 2px solid #3a3a3a;
+  display: inline-block;
 }
 
 .daya-tarik-lihat {
@@ -607,6 +611,8 @@ nav {
   font-size: 20px;
   font-weight: 800;
   color: #111;
+  border-bottom: 2px solid #3a3a3a;
+  display: inline-block;
   margin-bottom: 8px;
 }
 
@@ -698,6 +704,8 @@ nav {
   font-size: 18px;
   font-weight: 800;
   color: #111111;
+  border-bottom: 2px solid #3a3a3a;
+  display: inline-block;
   margin-bottom: 8px;
 }
 
@@ -1336,6 +1344,166 @@ nav {
   color: #1f2a3a;
   margin-bottom: 16px;
   max-width: 360px;
+}
+
+/* ══════════════════════════════
+   PAKET WISATA PAGE
+══════════════════════════════ */
+.paket-page-body {
+  background: #ececec;
+}
+
+.paket-hero {
+  height: 260px;
+}
+
+.paket-hero-bg {
+  background-image: url('assets/gmbr1.jpg');
+}
+
+.paket-hero-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.5) 0%,
+    rgba(0, 0, 0, 0.38) 48%,
+    rgba(0, 0, 0, 0.6) 100%
+  );
+}
+
+.paket-hero-content {
+  width: 100%;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.paket-hero-content .hero-title {
+  max-width: 100%;
+  margin-bottom: 10px;
+  font-size: 32px;
+}
+
+.paket-hero-content .hero-desc {
+  max-width: 720px;
+  margin-bottom: 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.paket-content {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 20px 40px 30px;
+}
+
+.paket-grid-section {
+  background: #efefef;
+  border: 1px solid #d8d8d8;
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.paket-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.paket-card {
+  background: #f9f9f9;
+  border: 1px solid #dfdfdf;
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0 2px 7px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.paket-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.13);
+}
+
+.paket-card h3 {
+  font-size: 12px;
+  color: #1a1a1a;
+  margin-bottom: 10px;
+  font-weight: 800;
+}
+
+.paket-thumb {
+  width: 100%;
+  height: 122px;
+  border-radius: 2px;
+  background: #cccccc;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.paket-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.paket-card:hover .paket-thumb img {
+  transform: scale(1.05);
+}
+
+.paket-harga {
+  font-size: 11px;
+  color: #111;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.paket-desc {
+  font-size: 10.5px;
+  color: #3a3a3a;
+  line-height: 1.35;
+  margin-bottom: 10px;
+}
+
+.paket-btn {
+  display: inline-flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  height: 32px;
+  border-radius: 3px;
+  background: #2f8f45;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 800;
+  transition: background 0.2s ease;
+}
+
+.paket-btn:hover {
+  background: #27783a;
+}
+
+@media (max-width: 900px) {
+  .paket-hero {
+    height: 210px;
+  }
+
+  .paket-hero-content .hero-title {
+    font-size: 26px;
+  }
+
+  .paket-content {
+    padding: 16px;
+  }
+
+  .paket-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .paket-btn {
+    font-size: 13px;
+  }
 }
 
 .info-tags {
