@@ -123,7 +123,7 @@ if (!reduceMotion && heroScrollButtons.length > 0) {
 
 // ── ANIMASI FADE UP SAAT SCROLL (HOME + TENTANG KAMI) ──
 const fadeTargets = document.querySelectorAll(
-  '.mengenal-kiri, .mengenal-card, .about-section, .about-image-row img, .about-banner img, .about-komitmen-card, .about-lokasi-wrap, .about-lokasi-map, .about-lokasi-info, .about-lokasi-info li'
+  '.mengenal-kiri, .mengenal-card, .about-section, .about-image-row img, .about-banner img, .about-komitmen-card, .about-lokasi-wrap, .about-lokasi-map, .about-lokasi-info, .about-lokasi-info li, .testimoni-gallery-section, .testimoni-photo, .testimoni-review-section, .review-card, .review-cta'
 );
 
 if (fadeTargets.length > 0) {
