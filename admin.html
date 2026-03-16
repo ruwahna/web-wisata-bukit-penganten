@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Wisata Redisari</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body class="admin-page-body">
+  <header class="admin-header">
+    <h1>Dashboard Admin Wisata</h1>
+    <p>Kelola paket wisata, galeri, fasilitas, dan pesan pengunjung.</p>
+  </header>
+
+  <main class="admin-main">
+    <section class="admin-section">
+      <h2>Tambah / Edit Paket Wisata</h2>
+      <form id="paketForm" class="admin-form" enctype="multipart/form-data">
+        <input type="hidden" id="paketId" name="paketId"/>
+
+        <label for="nama_paket">Nama Paket</label>
+        <input id="nama_paket" name="nama_paket" type="text" required/>
+
+        <label for="harga_label">Harga</label>
+        <input id="harga_label" name="harga_label" type="text" required placeholder="Contoh: Harga: Rp125.000 / orang"/>
+
+        <label for="deskripsi">Deskripsi</label>
+        <textarea id="deskripsi" name="deskripsi" rows="3" required></textarea>
+
+        <label for="detail_url">Detail URL</label>
+        <input id="detail_url" name="detail_url" type="text" value="#"/>
+
+        <label for="gambar_paket">Gambar Paket</label>
+        <input id="gambar_paket" name="gambar" type="file" accept="image/*"/>
+
+        <div class="admin-actions">
+          <button type="submit" class="btn-primary">Simpan Paket</button>
+          <button type="button" id="paketReset" class="btn-secondary">Batal Edit</button>
+        </div>
+      </form>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Nama</th>
+              <th>Harga</th>
+              <th>Gambar</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="paketTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="admin-section">
+      <h2>Upload Gambar Galeri</h2>
+      <form id="galeriForm" class="admin-form" enctype="multipart/form-data">
+        <label for="judul_galeri">Judul</label>
+        <input id="judul_galeri" name="judul" type="text" required/>
+
+        <label for="gambar_galeri">Gambar Galeri</label>
+        <input id="gambar_galeri" name="gambar" type="file" accept="image/*" required/>
+
+        <button type="submit" class="btn-primary">Upload Galeri</button>
+      </form>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Judul</th>
+              <th>Preview</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="galeriTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="admin-section">
+      <h2>Upload Gambar Fasilitas</h2>
+      <form id="fasilitasForm" class="admin-form" enctype="multipart/form-data">
+        <label for="nama_fasilitas">Nama Fasilitas</label>
+        <input id="nama_fasilitas" name="nama_fasilitas" type="text" required/>
+
+        <label for="deskripsi_fasilitas">Deskripsi</label>
+        <textarea id="deskripsi_fasilitas" name="deskripsi" rows="2"></textarea>
+
+        <label for="gambar_fasilitas">Gambar Fasilitas</label>
+        <input id="gambar_fasilitas" name="gambar" type="file" accept="image/*" required/>
+
+        <button type="submit" class="btn-primary">Upload Fasilitas</button>
+      </form>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Nama</th>
+              <th>Preview</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="fasilitasTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="admin-section">
+      <h2>Pesan Pengunjung (Form Kontak)</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Nama</th>
+              <th>Email</th>
+              <th>Pesan</th>
+              <th>Waktu</th>
+            </tr>
+          </thead>
+          <tbody id="pesanTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="admin.js"></script>
+</body>
+</html>

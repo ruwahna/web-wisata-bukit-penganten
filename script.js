@@ -241,3 +241,13 @@ setupHorizontalSlider({
   cardSelector: '.galeri-card',
   buttonSelector: '.galeri-lihat'
 });
+
+// Optimasi loading gambar untuk percepatan render halaman.
+const allImages = document.querySelectorAll('img');
+allImages.forEach((img, index) => {
+  if (index > 0) {
+    img.loading = 'lazy';
+  }
+
+  img.decoding = 'async';
+});

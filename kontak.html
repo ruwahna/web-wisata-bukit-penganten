@@ -117,6 +117,24 @@
               referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
         </article>
+
+        <article class="kontak-panel kontak-form-panel fade-up">
+          <h2>Kirim Pesan ke Admin</h2>
+          <p>Isi form berikut. Pesan Anda akan masuk ke dashboard admin pada tabel pesan_pengunjung.</p>
+          <form id="kontakForm" class="kontak-form" novalidate>
+            <label for="kontak_nama">Nama</label>
+            <input id="kontak_nama" name="nama" type="text" required placeholder="Nama lengkap"/>
+
+            <label for="kontak_email">Email</label>
+            <input id="kontak_email" name="email" type="email" required placeholder="nama@email.com"/>
+
+            <label for="kontak_pesan">Pesan</label>
+            <textarea id="kontak_pesan" name="pesan" rows="4" required placeholder="Tulis pesan Anda..."></textarea>
+
+            <button type="submit">Kirim Pesan</button>
+            <p id="kontakStatus" class="kontak-status" aria-live="polite"></p>
+          </form>
+        </article>
       </div>
     </section>
   </main>
@@ -160,5 +178,6 @@
   </section>
 
   <script src="script.js"></script>
+  <script src="kontak.js"></script>
 </body>
 </html>
