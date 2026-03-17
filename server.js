@@ -129,6 +129,30 @@ app.get('/api/paket', async (_req, res) => {
   }
 });
 
+app.get('/api/testimoni', async (_req, res) => {
+  try {
+    const rows = await runQuery(
+      `SELECT id, nama_pengunjung, kota, rating, highlights, komentar FROM testimoni WHERE is_active = TRUE ORDER BY created_at DESC`
+    );
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ message: `Gagal mengambil testimoni publik: ${error.message}` });
+  }
+});
+
+app.get('/api/galeri', async (req, res) => {
+  try {
+    const kategori = req.query.kategori === 'fasilitas' ? 'fasilitas' : 'galeri';
+    const rows = await runQuery(
+      `SELECT id, judul, gambar_url, kategori FROM galeri WHERE is_active = TRUE AND kategori = $1 ORDER BY created_at DESC`,
+      [kategori]
+    );
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ message: `Gagal mengambil galeri publik: ${error.message}` });
+  }
+});
+
 app.post('/api/admin/paket', upload.single('gambar'), async (req, res) => {
   try {
     const { nama_paket, harga_label, deskripsi, detail_url = '#' } = req.body;
@@ -194,6 +218,65 @@ app.delete('/api/admin/paket/:id', async (req, res) => {
     res.json({ message: 'Paket wisata berhasil dihapus.' });
   } catch (error) {
     res.status(500).json({ message: `Gagal menghapus paket: ${error.message}` });
+  }
+});
+
+app.get('/api/admin/testimoni', async (_req, res) => {
+  try {
+    const rows = await runQuery(
+      `SELECT id, nama_pengunjung, kota, rating, highlights, komentar, is_active, created_at FROM testimoni ORDER BY created_at DESC`
+    );
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ message: `Gagal mengambil testimoni: ${error.message}` });
+  }
+});
+
+app.post('/api/admin/testimoni', async (req, res) => {
+  try {
+    const {
+      nama_pengunjung,
+      kota,
+      rating = 5,
+      highlights = '',
+      komentar,
+    } = req.body;
+
+    if (!nama_pengunjung || !kota || !komentar) {
+      res.status(400).json({ message: 'Nama pengunjung, kota, dan komentar wajib diisi.' });
+      return;
+    }
+
+    await runQuery(
+      `INSERT INTO testimoni (nama_pengunjung, kota, rating, highlights, komentar) VALUES ($1, $2, $3, $4, $5)`,
+      [
+        nama_pengunjung.trim(),
+        kota.trim(),
+        Math.max(1, Math.min(5, Number(rating) || 5)),
+        String(highlights || '').trim(),
+        komentar.trim(),
+      ]
+    );
+
+    res.status(201).json({ message: 'Testimoni berhasil ditambahkan.' });
+  } catch (error) {
+    res.status(500).json({ message: `Gagal menambah testimoni: ${error.message}` });
+  }
+});
+
+app.delete('/api/admin/testimoni/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await runCommand(`DELETE FROM testimoni WHERE id = $1`, [id]);
+
+    if (result.rowCount === 0) {
+      res.status(404).json({ message: 'Testimoni tidak ditemukan.' });
+      return;
+    }
+
+    res.json({ message: 'Testimoni berhasil dihapus.' });
+  } catch (error) {
+    res.status(500).json({ message: `Gagal menghapus testimoni: ${error.message}` });
   }
 });
 

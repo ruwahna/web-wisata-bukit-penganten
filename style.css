@@ -1781,6 +1781,7 @@ nav.nav-open .nav-toggle span:nth-child(3) {
 .kontak-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
   gap: 16px;
 }
 
@@ -1876,6 +1877,7 @@ nav.nav-open .nav-toggle span:nth-child(3) {
 .kontak-map-panel {
   background: #325346;
   color: #ffffff;
+  grid-column: 1 / -1;
 }
 
 .kontak-map-panel p {
@@ -1889,13 +1891,13 @@ nav.nav-open .nav-toggle span:nth-child(3) {
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.35);
-  min-height: 180px;
+  min-height: 260px;
   background: #ffffff;
 }
 
 .kontak-map-wrap iframe {
   width: 100%;
-  min-height: 180px;
+  min-height: 260px;
   border: 0;
   display: block;
 }

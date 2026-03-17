@@ -1,6 +1,8 @@
 const paketForm = document.getElementById('paketForm');
 const paketResetBtn = document.getElementById('paketReset');
 const paketTableBody = document.getElementById('paketTableBody');
+const testimoniForm = document.getElementById('testimoniForm');
+const testimoniTableBody = document.getElementById('testimoniTableBody');
 const galeriForm = document.getElementById('galeriForm');
 const galeriTableBody = document.getElementById('galeriTableBody');
 const fasilitasForm = document.getElementById('fasilitasForm');
@@ -40,8 +42,7 @@ const resetPaketForm = () => {
 };
 
 const loadPaket = async () => {
-  const response = await fetch('/api/admin/paket');
-  const rows = await response.json();
+  const rows = await window.apiFetchJson('/api/admin/paket');
 
   paketTableBody.innerHTML = rows
     .map(
@@ -60,9 +61,26 @@ const loadPaket = async () => {
     .join('');
 };
 
+const loadTestimoni = async () => {
+  const rows = await window.apiFetchJson('/api/admin/testimoni');
+
+  testimoniTableBody.innerHTML = rows
+    .map(
+      (row) => `
+      <tr>
+        <td>${htmlEscape(row.nama_pengunjung)}</td>
+        <td>${htmlEscape(row.kota)}</td>
+        <td>${htmlEscape(row.rating)}</td>
+        <td>${htmlEscape(row.komentar)}</td>
+        <td><button type="button" data-id="${row.id}" class="btn-danger btn-delete-testimoni">Hapus</button></td>
+      </tr>
+    `
+    )
+    .join('');
+};
+
 const loadGaleri = async () => {
-  const response = await fetch('/api/admin/galeri');
-  const rows = await response.json();
+  const rows = await window.apiFetchJson('/api/admin/galeri');
 
   galeriTableBody.innerHTML = rows
     .filter((row) => row.kategori === 'galeri')
@@ -79,8 +97,7 @@ const loadGaleri = async () => {
 };
 
 const loadFasilitas = async () => {
-  const response = await fetch('/api/admin/fasilitas');
-  const rows = await response.json();
+  const rows = await window.apiFetchJson('/api/admin/fasilitas');
 
   fasilitasTableBody.innerHTML = rows
     .map(
@@ -96,8 +113,7 @@ const loadFasilitas = async () => {
 };
 
 const loadPesan = async () => {
-  const response = await fetch('/api/admin/pesan');
-  const rows = await response.json();
+  const rows = await window.apiFetchJson('/api/admin/pesan');
 
   pesanTableBody.innerHTML = rows
     .map(
@@ -115,7 +131,7 @@ const loadPesan = async () => {
 
 const loadAll = async () => {
   try {
-    await Promise.all([loadPaket(), loadGaleri(), loadFasilitas(), loadPesan()]);
+    await Promise.all([loadPaket(), loadTestimoni(), loadGaleri(), loadFasilitas(), loadPesan()]);
   } catch (error) {
     notify(`Gagal memuat data admin: ${error.message}`);
   }
@@ -131,12 +147,7 @@ paketForm.addEventListener('submit', async (event) => {
     const endpoint = paketId ? `/api/admin/paket/${paketId}` : '/api/admin/paket';
     const method = paketId ? 'PUT' : 'POST';
 
-    const response = await fetch(endpoint, { method, body: formData });
-    const result = await response.json();
-
-    if (!response.ok) {
-      throw new Error(result.message || 'Gagal menyimpan paket.');
-    }
+    const result = await window.apiFetchJson(endpoint, { method, body: formData });
 
     notify(result.message || 'Data paket tersimpan.');
     resetPaketForm();
@@ -167,10 +178,20 @@ document.addEventListener('click', async (event) => {
     if (!window.confirm('Hapus paket ini?')) return;
 
     const id = deletePaketBtn.getAttribute('data-id');
-    const response = await fetch(`/api/admin/paket/${id}`, { method: 'DELETE' });
-    const result = await response.json();
+    const result = await window.apiFetchJson(`/api/admin/paket/${id}`, { method: 'DELETE' });
     notify(result.message || 'Paket dihapus.');
     await loadPaket();
+    return;
+  }
+
+  const deleteTestimoniBtn = event.target.closest('.btn-delete-testimoni');
+  if (deleteTestimoniBtn) {
+    if (!window.confirm('Hapus testimoni ini?')) return;
+
+    const id = deleteTestimoniBtn.getAttribute('data-id');
+    const result = await window.apiFetchJson(`/api/admin/testimoni/${id}`, { method: 'DELETE' });
+    notify(result.message || 'Testimoni dihapus.');
+    await loadTestimoni();
     return;
   }
 
@@ -179,8 +200,7 @@ document.addEventListener('click', async (event) => {
     if (!window.confirm('Hapus gambar galeri ini?')) return;
 
     const id = deleteGaleriBtn.getAttribute('data-id');
-    const response = await fetch(`/api/admin/galeri/${id}`, { method: 'DELETE' });
-    const result = await response.json();
+    const result = await window.apiFetchJson(`/api/admin/galeri/${id}`, { method: 'DELETE' });
     notify(result.message || 'Galeri dihapus.');
     await loadGaleri();
     return;
@@ -191,10 +211,37 @@ document.addEventListener('click', async (event) => {
     if (!window.confirm('Hapus gambar fasilitas ini?')) return;
 
     const id = deleteFasilitasBtn.getAttribute('data-id');
-    const response = await fetch(`/api/admin/fasilitas/${id}`, { method: 'DELETE' });
-    const result = await response.json();
+    const result = await window.apiFetchJson(`/api/admin/fasilitas/${id}`, { method: 'DELETE' });
     notify(result.message || 'Fasilitas dihapus.');
     await loadFasilitas();
+  }
+});
+
+testimoniForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+
+  const formData = new FormData(testimoniForm);
+  const payload = {
+    nama_pengunjung: (formData.get('nama_pengunjung') || '').toString().trim(),
+    kota: (formData.get('kota') || '').toString().trim(),
+    rating: Number(formData.get('rating') || 5),
+    highlights: (formData.get('highlights') || '').toString().trim(),
+    komentar: (formData.get('komentar') || '').toString().trim(),
+  };
+
+  try {
+    const result = await window.apiFetchJson('/api/admin/testimoni', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+
+    notify(result.message || 'Testimoni tersimpan.');
+    testimoniForm.reset();
+    document.getElementById('rating_pengunjung').value = '5';
+    await loadTestimoni();
+  } catch (error) {
+    notify(error.message);
   }
 });
 
@@ -205,15 +252,10 @@ galeriForm.addEventListener('submit', async (event) => {
   formData.set('kategori', 'galeri');
 
   try {
-    const response = await fetch('/api/admin/galeri', {
+    const result = await window.apiFetchJson('/api/admin/galeri', {
       method: 'POST',
       body: formData,
     });
-    const result = await response.json();
-
-    if (!response.ok) {
-      throw new Error(result.message || 'Gagal upload galeri.');
-    }
 
     notify(result.message || 'Upload galeri berhasil.');
     galeriForm.reset();
@@ -229,15 +271,10 @@ fasilitasForm.addEventListener('submit', async (event) => {
   const formData = new FormData(fasilitasForm);
 
   try {
-    const response = await fetch('/api/admin/fasilitas', {
+    const result = await window.apiFetchJson('/api/admin/fasilitas', {
       method: 'POST',
       body: formData,
     });
-    const result = await response.json();
-
-    if (!response.ok) {
-      throw new Error(result.message || 'Gagal upload fasilitas.');
-    }
 
     notify(result.message || 'Upload fasilitas berhasil.');
     fasilitasForm.reset();

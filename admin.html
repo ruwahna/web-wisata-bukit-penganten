@@ -56,6 +56,43 @@
     </section>
 
     <section class="admin-section">
+      <h2>Tambah Testimoni</h2>
+      <form id="testimoniForm" class="admin-form">
+        <label for="nama_pengunjung">Nama Pengunjung</label>
+        <input id="nama_pengunjung" name="nama_pengunjung" type="text" required/>
+
+        <label for="kota_pengunjung">Kota</label>
+        <input id="kota_pengunjung" name="kota" type="text" required/>
+
+        <label for="rating_pengunjung">Rating (1-5)</label>
+        <input id="rating_pengunjung" name="rating" type="number" min="1" max="5" value="5" required/>
+
+        <label for="highlights_pengunjung">Highlights (pisahkan dengan koma)</label>
+        <input id="highlights_pengunjung" name="highlights" type="text" placeholder="Contoh: Spot bagus, Udara sejuk, Ramah keluarga"/>
+
+        <label for="komentar_pengunjung">Komentar</label>
+        <textarea id="komentar_pengunjung" name="komentar" rows="3" required></textarea>
+
+        <button type="submit" class="btn-primary">Simpan Testimoni</button>
+      </form>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Nama</th>
+              <th>Kota</th>
+              <th>Rating</th>
+              <th>Komentar</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="testimoniTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="admin-section">
       <h2>Upload Gambar Galeri</h2>
       <form id="galeriForm" class="admin-form" enctype="multipart/form-data">
         <label for="judul_galeri">Judul</label>
@@ -128,6 +165,7 @@
     </section>
   </main>
 
+  <script src="api-client.js"></script>
   <script src="admin.js"></script>
 </body>
 </html>

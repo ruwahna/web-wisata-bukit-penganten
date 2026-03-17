@@ -22,17 +22,11 @@ if (kontakForm && kontakStatus) {
       kontakStatus.textContent = 'Mengirim pesan...';
       kontakStatus.className = 'kontak-status loading';
 
-      const response = await fetch('/api/kontak', {
+      const result = await window.apiFetchJson('/api/kontak', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.message || 'Gagal mengirim pesan.');
-      }
 
       kontakStatus.textContent = result.message || 'Pesan berhasil dikirim.';
       kontakStatus.className = 'kontak-status success';

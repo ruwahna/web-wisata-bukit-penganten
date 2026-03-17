@@ -41,13 +41,7 @@ const loadPaketPublik = async () => {
   if (!paketGrid) return;
 
   try {
-    const response = await fetch('/api/paket');
-    const data = await response.json();
-
-    if (!response.ok) {
-      throw new Error(data.message || 'Gagal memuat paket wisata.');
-    }
-
+    const data = await window.apiFetchJson('/api/paket');
     renderPaket(data);
   } catch (_error) {
     // Jika API belum dijalankan, konten statis di HTML tetap tampil.
