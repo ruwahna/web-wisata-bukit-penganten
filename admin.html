@@ -8,13 +8,38 @@
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body class="admin-page-body">
-  <header class="admin-header">
-    <h1>Dashboard Admin Wisata</h1>
-    <p>Kelola paket wisata, galeri, fasilitas, dan pesan pengunjung.</p>
-  </header>
+  <div class="admin-layout">
+    <button type="button" class="admin-overlay" id="adminOverlay" aria-label="Tutup menu"></button>
 
-  <main class="admin-main">
-    <section class="admin-section">
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-brand">
+        <img class="admin-sidebar-logo" src="assets/logo kenumen.png" alt="Logo Kabupaten Kebumen"/>
+        <div>
+          <h1>Admin Redisari</h1>
+          <p>Dashboard Pengelolaan</p>
+        </div>
+      </div>
+
+      <nav class="admin-sidebar-nav" aria-label="Navigasi admin">
+        <button type="button" class="admin-nav-link is-active" data-target="section-paket">Paket Wisata</button>
+        <button type="button" class="admin-nav-link" data-target="section-testimoni">Testimoni</button>
+        <button type="button" class="admin-nav-link" data-target="section-galeri">Galeri</button>
+        <button type="button" class="admin-nav-link" data-target="section-fasilitas">Fasilitas</button>
+        <button type="button" class="admin-nav-link" data-target="section-pesan">Pesan Pengunjung</button>
+      </nav>
+    </aside>
+
+    <div class="admin-content-wrap">
+      <header class="admin-topbar">
+        <button type="button" class="admin-menu-toggle" id="adminMenuToggle" aria-label="Buka menu">☰</button>
+        <div>
+          <h2>Dashboard Admin</h2>
+          <p>Kelola paket wisata, galeri, fasilitas, dan pesan pengunjung.</p>
+        </div>
+      </header>
+
+      <main class="admin-main">
+        <section class="admin-section is-active" id="section-paket">
       <h2>Tambah / Edit Paket Wisata</h2>
       <form id="paketForm" class="admin-form" enctype="multipart/form-data">
         <input type="hidden" id="paketId" name="paketId"/>
@@ -53,9 +78,9 @@
           <tbody id="paketTableBody"></tbody>
         </table>
       </div>
-    </section>
+        </section>
 
-    <section class="admin-section">
+        <section class="admin-section" id="section-testimoni">
       <h2>Tambah Testimoni</h2>
       <form id="testimoniForm" class="admin-form">
         <label for="nama_pengunjung">Nama Pengunjung</label>
@@ -90,9 +115,9 @@
           <tbody id="testimoniTableBody"></tbody>
         </table>
       </div>
-    </section>
+        </section>
 
-    <section class="admin-section">
+        <section class="admin-section" id="section-galeri">
       <h2>Upload Gambar Galeri</h2>
       <form id="galeriForm" class="admin-form" enctype="multipart/form-data">
         <label for="judul_galeri">Judul</label>
@@ -116,9 +141,9 @@
           <tbody id="galeriTableBody"></tbody>
         </table>
       </div>
-    </section>
+        </section>
 
-    <section class="admin-section">
+        <section class="admin-section" id="section-fasilitas">
       <h2>Upload Gambar Fasilitas</h2>
       <form id="fasilitasForm" class="admin-form" enctype="multipart/form-data">
         <label for="nama_fasilitas">Nama Fasilitas</label>
@@ -145,9 +170,9 @@
           <tbody id="fasilitasTableBody"></tbody>
         </table>
       </div>
-    </section>
+        </section>
 
-    <section class="admin-section">
+        <section class="admin-section" id="section-pesan">
       <h2>Pesan Pengunjung (Form Kontak)</h2>
       <div class="table-wrap">
         <table>
@@ -162,8 +187,10 @@
           <tbody id="pesanTableBody"></tbody>
         </table>
       </div>
-    </section>
-  </main>
+        </section>
+      </main>
+    </div>
+  </div>
 
   <script src="api-client.js"></script>
   <script src="admin.js"></script>

@@ -35,6 +35,61 @@ const notify = (message) => {
   window.alert(message);
 };
 
+const setupMobileMenu = () => {
+  const body = document.body;
+  const toggle = document.getElementById('adminMenuToggle');
+  const overlay = document.getElementById('adminOverlay');
+  const navLinks = Array.from(document.querySelectorAll('.admin-nav-link'));
+
+  if (!toggle || !overlay) return;
+
+  const closeMenu = () => body.classList.remove('admin-mobile-open');
+
+  toggle.addEventListener('click', () => {
+    body.classList.toggle('admin-mobile-open');
+  });
+
+  overlay.addEventListener('click', closeMenu);
+
+  navLinks.forEach((link) => {
+    link.addEventListener('click', closeMenu);
+  });
+
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+      closeMenu();
+    }
+  });
+};
+
+const setupAdminTabs = () => {
+  const navLinks = Array.from(document.querySelectorAll('.admin-nav-link'));
+  const sections = Array.from(document.querySelectorAll('.admin-section'));
+
+  if (!navLinks.length || !sections.length) return;
+
+  const showSection = (targetId) => {
+    sections.forEach((section) => {
+      section.classList.toggle('is-active', section.id === targetId);
+    });
+
+    navLinks.forEach((link) => {
+      link.classList.toggle('is-active', link.getAttribute('data-target') === targetId);
+    });
+  };
+
+  navLinks.forEach((link) => {
+    link.addEventListener('click', () => {
+      const targetId = link.getAttribute('data-target');
+      if (!targetId) return;
+      showSection(targetId);
+    });
+  });
+
+  const activeLink = navLinks.find((link) => link.classList.contains('is-active')) || navLinks[0];
+  showSection(activeLink.getAttribute('data-target'));
+};
+
 const resetPaketForm = () => {
   paketForm.reset();
   document.getElementById('paketId').value = '';
@@ -284,4 +339,6 @@ fasilitasForm.addEventListener('submit', async (event) => {
   }
 });
 
+setupAdminTabs();
+setupMobileMenu();
 loadAll();
