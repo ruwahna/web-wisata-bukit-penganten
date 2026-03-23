@@ -399,7 +399,10 @@
     </div>
   </section>
 
-  <script src="api-client.js"></script>
+  <script>
+    window.API_BASE = 'http://' + (window.location.hostname || 'localhost') + ':3000';
+  </script>
+  <script src="api-client.js?v=20260324"></script>
   <script src="script.js"></script>
   <script src="galeri.js"></script>
 </body>
