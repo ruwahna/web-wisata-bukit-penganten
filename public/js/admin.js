@@ -12,8 +12,7 @@ const ADMIN_WA_NUMBER = '6285233749306';
 
 const toImagePath = (src) => {
   if (!src) return '';
-  if (src.startsWith('http') || src.startsWith('/')) return src;
-  return `/${src}`;
+  return src;
 };
 
 const htmlEscape = (value) =>

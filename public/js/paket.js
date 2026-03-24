@@ -15,8 +15,7 @@ const htmlEscape = (value) =>
 
 const mapImage = (url) => {
   if (!url) return 'assets/gmbr1.jpg';
-  if (url.startsWith('http') || url.startsWith('/')) return url;
-  return `/${url}`;
+  return url;
 };
 
 const slugify = (value) =>

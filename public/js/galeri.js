@@ -10,8 +10,7 @@ const escapeValue = (value) =>
 
 const imagePath = (url) => {
   if (!url) return 'assets/gmbr1.jpg';
-  if (url.startsWith('http') || url.startsWith('/')) return url;
-  return `/${url}`;
+  return url;
 };
 
 const renderGaleri = (items) => {
