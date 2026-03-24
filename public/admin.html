@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Wisata Redisari</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body class="admin-page-body">
+  <div class="admin-layout">
+    <button type="button" class="admin-overlay" id="adminOverlay" aria-label="Tutup menu"></button>
+
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-brand">
+        <img class="admin-sidebar-logo" src="assets/logo kenumen.png" alt="Logo Kabupaten Kebumen"/>
+        <div>
+          <h1>Admin Redisari</h1>
+          <p>Dashboard Pengelolaan</p>
+        </div>
+      </div>
+
+      <nav class="admin-sidebar-nav" aria-label="Navigasi admin">
+        <button type="button" class="admin-nav-link is-active" data-target="section-paket">Paket Wisata</button>
+        <button type="button" class="admin-nav-link" data-target="section-testimoni">Testimoni</button>
+        <button type="button" class="admin-nav-link" data-target="section-galeri">Galeri</button>
+        <button type="button" class="admin-nav-link" data-target="section-fasilitas">Fasilitas</button>
+        <button type="button" class="admin-nav-link" data-target="section-pesan">Pesan Pengunjung</button>
+      </nav>
+    </aside>
+
+    <div class="admin-content-wrap">
+      <header class="admin-topbar">
+        <button type="button" class="admin-menu-toggle" id="adminMenuToggle" aria-label="Buka menu">☰</button>
+        <div>
+          <h2>Dashboard Admin</h2>
+          <p>Kelola paket wisata, galeri, fasilitas, dan pesan pengunjung.</p>
+        </div>
+      </header>
+
+      <main class="admin-main">
+        <section class="admin-section is-active" id="section-paket">
+      <h2>Tambah / Edit Paket Wisata</h2>
+      <form id="paketForm" class="admin-form" enctype="multipart/form-data">
+        <input type="hidden" id="paketId" name="paketId"/>
+
+        <label for="nama_paket">Nama Paket</label>
+        <input id="nama_paket" name="nama_paket" type="text" required/>
+
+        <label for="harga_label">Harga</label>
+        <input id="harga_label" name="harga_label" type="text" required placeholder="Contoh: Harga: Rp125.000 / orang"/>
+
+        <label for="deskripsi">Deskripsi</label>
+        <textarea id="deskripsi" name="deskripsi" rows="3" required></textarea>
+
+        <label for="detail_url">Detail URL</label>
+        <input id="detail_url" name="detail_url" type="text" value="#"/>
+
+        <label for="gambar_paket">Gambar Paket</label>
+        <input id="gambar_paket" name="gambar" type="file" accept="image/*"/>
+
+        <div class="admin-actions">
+          <button type="submit" class="btn-primary">Simpan Paket</button>
+          <button type="button" id="paketReset" class="btn-secondary">Batal Edit</button>
+        </div>
+      </form>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Nama</th>
+              <th>Harga</th>
+              <th>Gambar</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="paketTableBody"></tbody>
+        </table>
+      </div>
+        </section>
+
+        <section class="admin-section" id="section-testimoni">
+      <h2>Tambah Testimoni</h2>
+      <form id="testimoniForm" class="admin-form">
+        <label for="nama_pengunjung">Nama Pengunjung</label>
+        <input id="nama_pengunjung" name="nama_pengunjung" type="text" required/>
+
+        <label for="kota_pengunjung">Kota</label>
+        <input id="kota_pengunjung" name="kota" type="text" required/>
+
+        <label for="rating_pengunjung">Rating (1-5)</label>
+        <input id="rating_pengunjung" name="rating" type="number" min="1" max="5" value="5" required/>
+
+        <label for="highlights_pengunjung">Highlights (pisahkan dengan koma)</label>
+        <input id="highlights_pengunjung" name="highlights" type="text" placeholder="Contoh: Spot bagus, Udara sejuk, Ramah keluarga"/>
+
+        <label for="komentar_pengunjung">Komentar</label>
+        <textarea id="komentar_pengunjung" name="komentar" rows="3" required></textarea>
+
+        <button type="submit" class="btn-primary">Simpan Testimoni</button>
+      </form>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Nama</th>
+              <th>Kota</th>
+              <th>Rating</th>
+              <th>Komentar</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="testimoniTableBody"></tbody>
+        </table>
+      </div>
+        </section>
+
+        <section class="admin-section" id="section-galeri">
+      <h2>Upload Gambar Galeri</h2>
+      <form id="galeriForm" class="admin-form" enctype="multipart/form-data">
+        <label for="judul_galeri">Judul</label>
+        <input id="judul_galeri" name="judul" type="text" required/>
+
+        <label for="gambar_galeri">Gambar Galeri</label>
+        <input id="gambar_galeri" name="gambar" type="file" accept="image/*" required/>
+
+        <button type="submit" class="btn-primary">Upload Galeri</button>
+      </form>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Judul</th>
+              <th>Preview</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="galeriTableBody"></tbody>
+        </table>
+      </div>
+        </section>
+
+        <section class="admin-section" id="section-fasilitas">
+      <h2>Upload Gambar Fasilitas</h2>
+      <form id="fasilitasForm" class="admin-form" enctype="multipart/form-data">
+        <label for="nama_fasilitas">Nama Fasilitas</label>
+        <input id="nama_fasilitas" name="nama_fasilitas" type="text" required/>
+
+        <label for="deskripsi_fasilitas">Deskripsi</label>
+        <textarea id="deskripsi_fasilitas" name="deskripsi" rows="2"></textarea>
+
+        <label for="gambar_fasilitas">Gambar Fasilitas</label>
+        <input id="gambar_fasilitas" name="gambar" type="file" accept="image/*" required/>
+
+        <button type="submit" class="btn-primary">Upload Fasilitas</button>
+      </form>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Nama</th>
+              <th>Preview</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="fasilitasTableBody"></tbody>
+        </table>
+      </div>
+        </section>
+
+        <section class="admin-section" id="section-pesan">
+      <h2>Pesan Pengunjung (Form Kontak)</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Nama</th>
+              <th>Email</th>
+              <th>No. WhatsApp</th>
+              <th>Pesan</th>
+              <th>Waktu</th>
+              <th>Aksi WA</th>
+            </tr>
+          </thead>
+          <tbody id="pesanTableBody"></tbody>
+        </table>
+      </div>
+        </section>
+      </main>
+    </div>
+  </div>  <script src="js/api-client.js?v=20260324"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
