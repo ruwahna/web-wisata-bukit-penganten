@@ -44,10 +44,14 @@ CREATE TABLE IF NOT EXISTS pesan_pengunjung (
   id SERIAL PRIMARY KEY,
   nama VARCHAR(120) NOT NULL,
   email VARCHAR(160) NOT NULL,
+  no_wa VARCHAR(30),
   pesan TEXT NOT NULL,
   status_baca VARCHAR(20) NOT NULL DEFAULT 'baru' CHECK (status_baca IN ('baru', 'dibaca')),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+ALTER TABLE IF EXISTS pesan_pengunjung
+ADD COLUMN IF NOT EXISTS no_wa VARCHAR(30);
 
 CREATE TABLE IF NOT EXISTS fasilitas (
   id SERIAL PRIMARY KEY,

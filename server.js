@@ -62,6 +62,12 @@ const runQuery = async (sql, params = []) => {
 
 const runCommand = async (sql, params = []) => pool.query(sql, params);
 
+const ensureSchemaCompatibility = async () => {
+  await runCommand(
+    `ALTER TABLE pesan_pengunjung ADD COLUMN IF NOT EXISTS no_wa VARCHAR(30)`
+  );
+};
+
 const mapUploadPath = (file) => {
   if (!file) return '';
   return `uploads/${file.filename}`;
@@ -78,16 +84,18 @@ app.get('/api/health', async (_req, res) => {
 
 app.post('/api/kontak', async (req, res) => {
   try {
-    const { nama, email, pesan } = req.body;
+    const { nama, email, no_wa, pesan } = req.body;
 
-    if (!nama || !email || !pesan) {
-      res.status(400).json({ message: 'Nama, email, dan pesan wajib diisi.' });
+    if (!nama || !email || !no_wa || !pesan) {
+      res.status(400).json({ message: 'Nama, email, nomor WhatsApp, dan pesan wajib diisi.' });
       return;
     }
 
+    const nomorWa = String(no_wa).replace(/[^\d+]/g, '').slice(0, 30);
+
     await runQuery(
-      `INSERT INTO pesan_pengunjung (nama, email, pesan) VALUES ($1, $2, $3)`,
-      [nama.trim(), email.trim(), pesan.trim()]
+      `INSERT INTO pesan_pengunjung (nama, email, no_wa, pesan) VALUES ($1, $2, $3, $4)`,
+      [nama.trim(), email.trim(), nomorWa, pesan.trim()]
     );
 
     res.status(201).json({ message: 'Pesan berhasil dikirim.' });
@@ -99,7 +107,7 @@ app.post('/api/kontak', async (req, res) => {
 app.get('/api/admin/pesan', async (_req, res) => {
   try {
     const rows = await runQuery(
-      `SELECT id, nama, email, pesan, status_baca, created_at FROM pesan_pengunjung ORDER BY created_at DESC`
+      `SELECT id, nama, email, no_wa, pesan, status_baca, created_at FROM pesan_pengunjung ORDER BY created_at DESC`
     );
     res.json(rows);
   } catch (error) {
@@ -380,6 +388,16 @@ app.use((err, _req, res, _next) => {
   res.status(400).json({ message: err.message || 'Terjadi kesalahan.' });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server berjalan di http://localhost:${PORT}`);
-});
+const startServer = async () => {
+  try {
+    await ensureSchemaCompatibility();
+    app.listen(PORT, () => {
+      console.log(`Server berjalan di http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error(`Gagal inisialisasi server: ${error.message}`);
+    process.exit(1);
+  }
+};
+
+startServer();

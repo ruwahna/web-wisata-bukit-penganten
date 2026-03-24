@@ -8,6 +8,7 @@ const galeriTableBody = document.getElementById('galeriTableBody');
 const fasilitasForm = document.getElementById('fasilitasForm');
 const fasilitasTableBody = document.getElementById('fasilitasTableBody');
 const pesanTableBody = document.getElementById('pesanTableBody');
+const ADMIN_WA_NUMBER = '6285233749306';
 
 const toImagePath = (src) => {
   if (!src) return '';
@@ -29,6 +30,31 @@ const fmtDate = (isoDate) => {
   } catch {
     return '-';
   }
+};
+
+const normalizeWaNumber = (value) => {
+  const raw = String(value || '').replace(/[^\d+]/g, '').trim();
+  if (!raw) return '';
+
+  if (raw.startsWith('+62')) return `62${raw.slice(3)}`;
+  if (raw.startsWith('62')) return raw;
+  if (raw.startsWith('0')) return `62${raw.slice(1)}`;
+  return raw;
+};
+
+const buildAdminWaSummary = (row) => {
+  const waktu = fmtDate(row.created_at);
+  return [
+    'Ringkasan pesan dari form website:',
+    '',
+    `Nama: ${row.nama || '-'}`,
+    `Email: ${row.email || '-'}`,
+    `Nomor WA Pengunjung: ${row.no_wa || '-'}`,
+    `Waktu kirim: ${waktu}`,
+    '',
+    'Pesan:',
+    row.pesan || '-',
+  ].join('\n');
 };
 
 const notify = (message) => {
@@ -171,16 +197,25 @@ const loadPesan = async () => {
   const rows = await window.apiFetchJson('/api/admin/pesan');
 
   pesanTableBody.innerHTML = rows
-    .map(
-      (row) => `
+    .map((row) => {
+      const noWa = normalizeWaNumber(row.no_wa || '');
+      const waText = buildAdminWaSummary(row);
+      const waHref = `https://wa.me/${ADMIN_WA_NUMBER}?text=${encodeURIComponent(waText)}`;
+
+      return `
       <tr>
         <td>${htmlEscape(row.nama)}</td>
         <td>${htmlEscape(row.email)}</td>
+        <td>${htmlEscape(row.no_wa || '-')}</td>
         <td>${htmlEscape(row.pesan)}</td>
         <td>${fmtDate(row.created_at)}</td>
+        <td class="admin-actions-cell">
+          <a href="${waHref}" class="btn-secondary admin-btn-link" target="_blank" rel="noopener noreferrer">Kirim ke WA Admin</a>
+          ${noWa ? `<a href="https://wa.me/${noWa}" class="btn-primary admin-btn-link" target="_blank" rel="noopener noreferrer">Balas Pengunjung</a>` : ''}
+        </td>
       </tr>
-    `
-    )
+    `;
+    })
     .join('');
 };
 
