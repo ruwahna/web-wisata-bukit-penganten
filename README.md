@@ -1,96 +1,99 @@
-# Web Wisata Bukit Penganten - Backend + Admin
+# Wisata Goa Asrep & Bukit Penganten
 
-## Fitur yang sudah ditambahkan
+Website wisata Desa Redisari, Kebumen — menampilkan informasi paket wisata, galeri, fasilitas, testimoni, dan form kontak pengunjung.
 
-- Struktur database rapi dengan tabel:
-  - `admin`
-  - `paket_wisata`
-  - `galeri`
-  - `testimoni`
-  - `pesan_pengunjung`
-  - `fasilitas`
-- Form kontak terhubung ke database (`pesan_pengunjung`).
-- Dashboard admin untuk:
-  - CRUD paket wisata (Create, Read, Update, Delete)
-  - lihat pesan pengunjung
-  - upload gambar galeri
-  - upload gambar fasilitas
-- Upload gambar paket wisata.
-- Optimasi frontend:
-  - lazy loading gambar
-  - async decoding gambar
-  - admin panel responsif (mobile + desktop)
+## Struktur Folder
 
-## Struktur file baru
+```
+├── public/            Frontend (HTML, CSS, JS, assets)
+│   ├── css/           Stylesheet
+│   ├── js/            Client-side JavaScript
+│   └── assets/        Gambar statis & uploads
+├── src/               Backend source code
+│   ├── app.js         Express app setup
+│   ├── config/db.js   Koneksi PostgreSQL
+│   ├── middleware/     Multer upload config
+│   └── routes/        API route modules
+├── db/                Database scripts
+│   ├── schema.sql     Struktur tabel
+│   └── seed.sql       Data awal contoh
+├── server.js          Entry point
+└── .env               Konfigurasi environment
+```
 
-- `server.js` -> Backend API Express + PostgreSQL + upload
-- `admin.html` -> Halaman dashboard admin
-- `admin.js` -> Logic CRUD/upload admin
-- `kontak.js` -> Submit form kontak ke API
-- `paket.js` -> Ambil data paket dari API publik
+## Prasyarat
+
+- **Node.js** >= 18
+- **PostgreSQL** >= 14
 
 ## Setup
 
-1. Install Node.js LTS.
-2. Jalankan:
+### 1. Install dependencies
 
 ```bash
 npm install
 ```
 
-3. Buat file `.env` dari `.env.example` lalu sesuaikan koneksi PostgreSQL.
-4. Import schema di pgAdmin:
-  - Buat database `wisata_redisari`
-  - Buka database tersebut di pgAdmin
-  - Buka Query Tool
-  - Jalankan isi file `schema.sql`
+### 2. Buat database
 
-5. Jalankan server:
+Buka pgAdmin atau psql, lalu:
 
-```bash
-npm start
+```sql
+CREATE DATABASE wisata_redisari;
 ```
 
-6. Buka:
-- Frontend: `http://localhost:3000`
-- Admin: `http://localhost:3000/admin.html`
+### 3. Jalankan schema & seed
 
-## Endpoint utama
+```bash
+psql -d wisata_redisari -f db/schema.sql
+psql -d wisata_redisari -f db/seed.sql
+```
 
-- `POST /api/kontak` -> simpan pesan kontak
-- `GET /api/admin/pesan` -> list pesan pengunjung
-- `GET /api/admin/paket` -> list paket admin
-- `POST /api/admin/paket` -> tambah paket + upload gambar
-- `PUT /api/admin/paket/:id` -> edit paket
-- `DELETE /api/admin/paket/:id` -> hapus paket
-- `GET /api/admin/galeri` -> list galeri
-- `POST /api/admin/galeri` -> upload gambar galeri
-- `DELETE /api/admin/galeri/:id` -> hapus gambar galeri
-- `GET /api/admin/fasilitas` -> list fasilitas
-- `POST /api/admin/fasilitas` -> upload gambar fasilitas
-- `DELETE /api/admin/fasilitas/:id` -> hapus fasilitas
-- `GET /api/paket` -> paket publik aktif untuk halaman paket
+### 4. Konfigurasi environment
 
-## Checklist testing
+Salin `.env.example` ke `.env` dan sesuaikan:
 
-1. Tombol berfungsi:
-- Cek submit form di admin (paket/galeri/fasilitas)
-- Cek tombol edit/hapus paket
+```bash
+cp .env.example .env
+```
 
-2. Data tersimpan:
-- Setelah submit, cek tabel PostgreSQL terkait di pgAdmin
+```env
+PORT=3000
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=password_kamu
+DB_NAME=wisata_redisari
+```
 
-3. Gambar muncul:
-- Cek thumbnail di admin
-- Cek halaman paket menampilkan gambar hasil upload
+### 5. Jalankan server
 
-4. Form kontak masuk admin:
-- Isi form di halaman kontak
-- Pastikan muncul di tabel pesan pada admin
+```bash
+# Production
+npm start
 
-5. Responsive:
-- Cek tampilan `admin.html` di HP dan laptop
+# Development (auto-reload)
+npm run dev
+```
 
-6. Performa:
-- Semua gambar sudah `loading="lazy"` dan `decoding="async"`
-- Ukuran upload dibatasi maksimal 5MB per gambar
+Buka browser ke `http://localhost:3000`
+
+## Admin Panel
+
+Akses admin panel di `http://localhost:3000/admin.html` untuk mengelola:
+- Paket wisata
+- Testimoni
+- Galeri foto
+- Fasilitas
+- Pesan pengunjung
+
+## API Endpoints
+
+| Method | Endpoint | Keterangan |
+|--------|----------|------------|
+| GET | `/api/health` | Health check |
+| GET | `/api/paket` | Paket aktif (public) |
+| GET | `/api/testimoni` | Testimoni aktif (public) |
+| GET | `/api/galeri` | Galeri aktif (public) |
+| POST | `/api/kontak` | Kirim pesan kontak |
+| GET/POST/PUT/DELETE | `/api/admin/*` | Endpoint admin |

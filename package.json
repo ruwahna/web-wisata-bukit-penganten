@@ -2,12 +2,13 @@
   "name": "web-wisata-bukit-penganten",
   "version": "1.0.0",
   "private": true,
-  "description": "Website wisata dengan backend API untuk paket, testimoni, dan galeri.",
+  "description": "Website wisata Goa Asrep & Bukit Penganten, Desa Redisari, Kebumen.",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js",
-    "check": "node --check server.js"
+    "dev": "npx nodemon server.js",
+    "check": "node --check server.js && node --check src/app.js && node --check src/config/db.js && node --check src/middleware/upload.js && node --check src/routes/health.js && node --check src/routes/kontak.js && node --check src/routes/paket.js && node --check src/routes/testimoni.js && node --check src/routes/galeri.js && node --check src/routes/fasilitas.js",
+    "db:init": "echo 'Jalankan di psql: \\i db/schema.sql lalu \\i db/seed.sql'"
   },
   "dependencies": {
     "cors": "^2.8.5",

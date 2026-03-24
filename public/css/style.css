@@ -284,7 +284,7 @@ nav.nav-open .nav-toggle span:nth-child(3) {
 .hero-bg {
   position: absolute;
   inset: 0;
-  background: url('assets/gmbr1.jpg') center / cover no-repeat;
+  background: url('../assets/gmbr1.jpg') center / cover no-repeat;
   transition: transform 0.1s linear;
 }
 
@@ -1296,7 +1296,7 @@ nav.nav-open .nav-toggle span:nth-child(3) {
   right: 0;
   top: 68px;
   height: 170px;
-  background: url('assets/gmbr1.jpg') center / cover no-repeat;
+  background: url('../assets/gmbr1.jpg') center / cover no-repeat;
   opacity: 0.2;
   pointer-events: none;
 }
@@ -1975,7 +1975,7 @@ nav.nav-open .nav-toggle span:nth-child(3) {
 }
 
 .kontak-hero-bg {
-  background-image: url('assets/gmbr1.jpg');
+  background-image: url('../assets/gmbr1.jpg');
 }
 
 .kontak-hero-overlay {
@@ -2188,7 +2188,7 @@ nav.nav-open .nav-toggle span:nth-child(3) {
 }
 
 .paket-hero-bg {
-  background-image: url('assets/gmbr1.jpg');
+  background-image: url('../assets/gmbr1.jpg');
 }
 
 .paket-hero-overlay {
@@ -2759,7 +2759,7 @@ body {
 }
 
 .fasilitas-hero-bg {
-  background-image: url('assets/gmbr1.jpg');
+  background-image: url('../assets/gmbr1.jpg');
 }
 
 .fasilitas-hero-overlay {
@@ -2890,7 +2890,7 @@ body {
 }
 
 .testimoni-hero-bg {
-  background-image: url('assets/gmbr1.jpg');
+  background-image: url('../assets/gmbr1.jpg');
 }
 
 .testimoni-hero-overlay {
