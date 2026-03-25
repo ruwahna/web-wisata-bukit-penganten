@@ -1,34 +1,77 @@
 (function () {
-  /**
-   * API Client — auto-detects base URL.
-   * Karena frontend di-serve oleh server Express yang sama,
-   * kita cukup pakai relative URL (tanpa host:port).
-   */
+  const host = window.location.hostname;
+  const protocol = window.location.protocol || 'http:';
+  const customBase = (window.API_BASE || '').trim();
+
+  const uniq = (items) => Array.from(new Set(items.filter(Boolean)));
+
+  const getBaseCandidates = () => {
+    if (customBase) return [customBase];
+
+    const list = [''];
+
+    if (window.location.port !== '3000') {
+      if (host && host !== 'localhost' && host !== '127.0.0.1') {
+        list.push(`${protocol}//${host}:3000`);
+      }
+
+      list.push('http://localhost:3000');
+      list.push('http://127.0.0.1:3000');
+    }
+
+    return uniq(list);
+  };
+
   window.apiFetchJson = async function apiFetchJson(path, options) {
     const safePath = String(path || '').startsWith('/') ? path : `/${path}`;
+    const candidates = getBaseCandidates();
 
-    try {
-      const response = await fetch(safePath, options || {});
-      const rawText = await response.text();
+    let lastError = null;
 
-      let result = {};
-      if (rawText) {
-        try {
-          result = JSON.parse(rawText);
-        } catch (_parseError) {
-          throw new Error(
-            `Endpoint ${safePath} tidak mengembalikan JSON. Pastikan backend aktif lewat: npm start`
-          );
+    for (let index = 0; index < candidates.length; index += 1) {
+      const base = candidates[index];
+      const url = `${base}${safePath}`;
+
+      try {
+        const response = await fetch(url, options || {});
+        const rawText = await response.text();
+
+        let result = {};
+        if (rawText) {
+          try {
+            result = JSON.parse(rawText);
+          } catch (_parseError) {
+            const isLast = index === candidates.length - 1;
+            if (!isLast) {
+              continue;
+            }
+
+            throw new Error(
+              `Endpoint ${url} tidak mengembalikan JSON. Pastikan backend aktif lewat: node server.js`
+            );
+          }
         }
-      }
 
-      if (!response.ok) {
-        throw new Error(result.message || `Request gagal (${response.status}).`);
-      }
+        if (!response.ok) {
+          throw new Error(result.message || `Request gagal (${response.status}).`);
+        }
 
-      return result;
-    } catch (error) {
-      throw error;
+        if (!customBase && base) {
+          window.API_BASE = base;
+        }
+
+        return result;
+      } catch (error) {
+        lastError = error;
+      }
     }
+
+    if (lastError && String(lastError.message || '').toLowerCase().includes('failed to fetch')) {
+      throw new Error(
+        'Tidak dapat terhubung ke server API. Jalankan backend dengan: node server.js (port 3000).'
+      );
+    }
+
+    throw lastError || new Error('Tidak dapat terhubung ke API. Pastikan backend aktif lewat: node server.js');
   };
 })();
